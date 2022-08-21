@@ -1,0 +1,188 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+			<style>
+
+                a{
+                    text-decoration: none;
+                }
+
+				ul, li{
+					margin: 0;
+					list-style: none;
+				}
+
+                .principal{
+                    width: 100% !important;
+                }
+
+                .card{
+                    margin: 0 auto;
+                    height: auto;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    width: 400px;
+                    background-color: rgba(0,0,0,0.05);
+                }
+
+                .card-header{
+                    text-align: center;
+                }
+
+                .social_icon span{
+                    font-size: 60px;
+                    margin-left: 10px;
+                    color: #FFC312;
+                }
+
+                .social_icon span:hover{
+                    color: #000;
+                    cursor: pointer;
+                }
+
+                .card-header h2{
+                    color: #000;
+                }
+
+                .social_icon{
+                    position: absolute;
+                    right: 20px;
+                    top: -45px;
+                }
+
+                .input-group-prepend span{
+                    width: 50px;
+                    background-color: #FFC312;
+                    color: black;
+                    border:0 !important;
+                }
+
+                input:focus{
+                    outline: 0 0 0 0  !important;
+                    box-shadow: 0 0 0 0 !important;
+                }
+
+                .remember{
+                    color: #000;
+                }
+
+                .remember input{
+                    width: 20px;
+                    height: 20px;
+                    margin: 2 10 5 12;
+                }
+
+                .links{
+                    color: #000;
+                }
+
+                .links a{
+                    margin-left: 4px;
+                }
+
+                .form-group{
+                    margin-bottom: 20px;
+                }
+
+                .form-group > button{
+                    margin-top: 20px;
+                    width: 100%;
+                }
+                
+                .card-footer a{
+                    text-decoration: none;
+                    color: #000;
+                }
+
+                .card-footer a:hover{
+                    color: #aaa;
+                }
+
+                .fa-arrow-right-to-bracket, .fa-check-circle{
+                    color: #1dca34;
+                }
+
+                .input-group-text > i{
+                    text-align: center;
+                }
+
+			</style>
+
+            <div class="principal">
+                
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Acessar Sistema</h5>
+                            {% if messages %}
+                                <div class="alert alert-danger">
+                                    {% for message in messages %}
+                                        {% if forloop.first %}
+                                            {{ message }}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            {% if funci_sem_senha %}
+                                <style>
+                                    .alert-danger{
+                                        display: none;
+                                    }
+                                </style>
+                                <div class="alert alert-primary">
+                                    <a href="{% url 'funcionario:primeiro_acesso' %}"> Clique para cadastrar/alterar a senha.</a>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body">
+                            <form action="{% url 'autenticacao:login' %}" method="post">
+                            {% csrf_token %}
+                                <div class="input-group form-group">
+                                    <div class="col-12">
+                                        <label class="visually-hidden" for="inlineFormInputGroupUsername">Usuário</label>
+                                        <div class="input-group">
+                                        <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+                                                {{ form.username }}
+                                                <!--<input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Usuário">-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="input-group form-group">
+                                    <div class="col-12">
+                                        <label class="visually-hidden" for="inlineFormInputGroupUsername">Senha</label>
+                                        <div class="input-group">
+                                        <div class="input-group-text"><i class="fa-solid fa-key"></i></div>
+                                                {{ form.password }}
+                                                <!--<input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Senha">-->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-center remember">
+                                    <input type="checkbox">Lembre-me
+                                </div>
+
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Entrar</button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-center">
+                                Problemas? Contacte seu supervisor. 
+                            </div>
+                        </div>
+                    </div>
+
+            
+            </div>
+
+{% endblock %}

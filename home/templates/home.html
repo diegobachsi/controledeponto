@@ -1,0 +1,115 @@
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	<!-- JavaScript Bundle with Popper -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+	<link href="/static/css/style.css" rel="stylesheet">
+
+  </head>
+
+  <style>
+
+    body{
+        background: #fff;
+    }
+
+    .alert{
+        padding: 5px;
+    }
+
+    .container{
+        display: grid !important;
+        grid-template-columns: auto auto auto;
+    }
+
+  </style>
+
+  <body>
+
+    {% if user.is_authenticated %}
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Gestão de Pessoas</a>
+                Bem-vindo, {{ user.get_full_name }}! 
+            
+                <a class="btn btn-outline-danger" href="/logout/"> 
+                    <i class="fa-solid fa-xmark"></i>  Sair
+                </a>
+            </div>
+        </nav>
+
+    {% else %}
+
+        <nav class="navbar navbar-expand-md navbar-light bg-light mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Gestão de Pessoas</a>
+                <a class="btn btn-outline-primary" href="/login/"> Entrar</a>
+            </div>
+        </nav>
+
+    {% endif %}
+
+    {% block content %}
+
+        {% if user.is_staff %}
+
+            <main class="container">
+
+                    <div class="bg-light p-5 rounded m-2">
+                    <h1>Validar Ponto Funci</h1>
+                    <p class="lead">Acesse o botão abaixo para registro do seu ponto.</p>
+                    <a class="btn btn-lg btn-primary" href="/form_validar_ponto/" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+                    <div class="bg-light p-5 rounded m-2">
+                        <h1>Resetar Senha Funci</h1>
+                        <p class="lead">Clique para consultar seus registro do dia.</p>
+                        <a class="btn btn-lg btn-primary" href="/form_resetar_senha/" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+                    <div class="bg-light p-5 rounded m-2">
+                        <h1>Validar Férias Funci</h1>
+                        <p class="lead">Indique seu período de férias aqui.</p>
+                        <a class="btn btn-lg btn-primary" href="#" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+            </main>
+
+        {% else %}
+      
+            <main class="container">
+
+                    <div class="bg-light p-5 rounded m-2">
+                    <h1>Registre seu Ponto</h1>
+                    <p class="lead">Acesse o botão abaixo para registro do seu ponto.</p>
+                    <a class="btn btn-lg btn-primary" href="/ponto/" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+                    <div class="bg-light p-5 rounded m-2">
+                        <h1>Consultar Ponto do Dia</h1>
+                        <p class="lead">Clique para consultar seus registro do dia.</p>
+                        <a class="btn btn-lg btn-primary" href="/consultar_ponto/" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+                    <div class="bg-light p-5 rounded m-2">
+                        <h1>Validar Ponto</h1>
+                        <p class="lead">Valide os pontos registrados.</p>
+                        <a class="btn btn-lg btn-primary" href="/confirmar_validacao_ponto/" role="button">Clique Aqui &raquo;</a>
+                    </div>
+
+            </main>
+
+        {% endif %}
+
+    {% endblock %}
+
+    <div class="m-5 text-center text-primary">e-ponto | 2022 | diegoalves</div>
+
+  </body>
+
+</html>

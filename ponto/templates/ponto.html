@@ -1,0 +1,70 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Filmes{% endblock %}
+
+{% block content %}
+
+    <style>
+
+    .container{
+        display: grid !important;
+        grid-template-columns: auto;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    </style>
+
+    <main class="container">
+
+        {% if registro_sucess %}
+            <div class="bg-light p-5 rounded m-2">
+                <h1 class="text-success">Registro ponto realizado com sucesso!</h1>
+                <p class="lead">Acesse a aba <a href="/consultar_ponto/">Consultar Ponto</a> para verificar seus registros.</p>
+                <h5>Sua jornada encerrará em {{ data_saida }} às {{ hora_saida }}</h5>
+            </div>
+            <div class="bg-light p-5 rounded m-2">
+                <p class="m-2"><b>Matrícula:</b> {{ matricula }}</p>
+                <p class="m-2"><b>Funcionário:</b> {{ user.get_full_name }}</p>
+                <p class="m-2"><b>Setor:</b> {{ setor }}</p>
+                <p class="m-2"><b>Cargo:</b> {{ cargo }}</p>
+                {% for item in dados_ponto %}
+                    <h3 class="mt-4 pt-3"><b>{{ item.tipo }}</b>: {{ item.data}} as {{ item.hora}}</h3>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="bg-light p-5 rounded m-2">
+                {% if ponto_encerrado %}
+                    <h2 class="text-primary">Sua jornada encerrou. </h2>
+                    <h5>Caso precise continuar consulte seu Supervisor imediato.</h5>
+                {% else %}
+                    {% if btn_registrar == 'ENTRAR' %}
+                        <h1>{{ data }} - {{ hora }}</h1>
+                        <p class="lead">Acesse o botão abaixo para entrar no ponto. O horário será computado após o registro.</p>
+                        <a class="btn btn-lg btn-primary" href="/registrar_ponto/" role="button">Entrar &raquo;</a>
+                    {% else %}
+                        <h1>{{ data }} - {{ hora }}</h1>
+                        <p class="lead">Acesse o botão abaixo para sair do ponto. O horário será computado após o registro.</p>
+                        <a class="btn btn-lg btn-primary" href="/registrar_ponto/" role="button">Sair &raquo;</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="bg-light p-5 rounded m-2">
+                <p class="m-2"><b>Matrícula:</b> {{ matricula }}</p>
+                <p class="m-2"><b>Funcionário:</b> {{ user.get_full_name }}</p>
+                <p class="m-2"><b>Setor:</b> {{ setor }}</p>
+                <p class="m-2"><b>Cargo:</b> {{ cargo }}</p>
+                {% for item in dados_ponto %}
+                    <h3 class="mt-4 pt-3"><b>{{ item.tipo }}</b>: {{ item.data}} as {{ item.hora}}</h3>
+                {% endfor %}
+            </div>
+            
+        {% endif %}
+        
+    </main>
+
+{% endblock %}

@@ -1,0 +1,215 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+			<style>
+
+				.msg_erros{
+					color: rgb(226, 68, 19);
+				}
+
+                a{
+                    text-decoration: none;
+                }
+
+				ul, li{
+					margin: 0;
+					list-style: none;
+				}
+
+                .principal{
+                    width: 100% !important;
+                }
+
+                .card{
+                    margin: 0 auto;
+                    height: auto;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                    width: 400px;
+                    background-color: rgba(0,0,0,0.05);
+                }
+
+                .card-header{
+                    text-align: center;
+                }
+
+                .social_icon span{
+                    font-size: 60px;
+                    margin-left: 10px;
+                    color: #FFC312;
+                }
+
+                .social_icon span:hover{
+                    color: #000;
+                    cursor: pointer;
+                }
+
+                .card-header h2{
+                    color: #000;
+                }
+
+                .social_icon{
+                    position: absolute;
+                    right: 20px;
+                    top: -45px;
+                }
+
+                .input-group-prepend span{
+                    width: 50px;
+                    background-color: #FFC312;
+                    color: black;
+                    border:0 !important;
+                }
+
+                input:focus{
+                    outline: 0 0 0 0  !important;
+                    box-shadow: 0 0 0 0 !important;
+                }
+
+                .remember{
+                    color: #000;
+                }
+
+                .remember input{
+                    width: 20px;
+                    height: 20px;
+                    margin: 2 10 5 12;
+                }
+
+                .links{
+                    color: #000;
+                }
+
+                .links a{
+                    margin-left: 4px;
+                }
+
+                .form-group{
+                    margin-bottom: 20px;
+                }
+
+                .form-group > button{
+                    margin-top: 20px;
+                    width: 100%;
+                }
+                
+                .card-footer a{
+                    text-decoration: none;
+                    color: #000;
+                }
+
+                .card-footer a:hover{
+                    color: #aaa;
+                }
+
+                .fa-arrow-right-to-bracket, .fa-check-circle{
+                    color: #1dca34;
+                }
+
+                .input-group-text > i{
+                    text-align: center;
+                }
+
+                .link-logar{
+                    text-align: center;
+                }
+
+                .help{
+                    font-size: 12px;
+                }
+
+			</style>
+
+            <div class="principal">
+                
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Primeiro Acesso</h5>
+                            {% if messages %}
+        
+                                    {% for message in messages %}
+                                        {% if forloop.first %}
+                                            {% if message.tags == "error" %}
+                                                <div class="alert alert-danger">
+                                                    {{ message }}
+                                                </div>
+                                            {% else %}
+                                                <div class="alert alert-success">
+                                                  {{ message }}
+                                                </div>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+
+                            {% endif %}
+                        </div>
+
+                        <div class="card-body">
+
+                            {% if sucess %}
+
+                                <div class="link-logar">
+                                    <a class="btn btn-outline-primary" href="/login/">Logar</a>
+                                </div>      
+
+                            {% else %}
+
+                                <form action="{% url 'funcionario:primeiro_acesso' %}" method="post">
+                                {% csrf_token %}
+
+                                    <div class="input-group form-group">
+                                        <div class="col-12">
+                                            <label class="visually-hidden" for="inlineFormInputGroupUsername">Senha</label>
+                                            <div class="input-group">
+                                            <div class="input-group-text"><i class="fa-solid fa-user"></i></div>
+                                                    {{ form.matricula }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group form-group">
+                                        <div class="col-12">
+                                            <label class="visually-hidden" for="inlineFormInputGroupUsername">Usuário</label>
+                                            <div class="input-group">
+                                            <div class="input-group-text"><i class="fa-solid fa-key"></i></div>
+                                                    {{ form.senha }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group form-group">
+                                        <div class="col-12">
+                                            <label class="visually-hidden" for="inlineFormInputGroupUsername">Senha</label>
+                                            <div class="input-group">
+                                            <div class="input-group-text"><i class="fa-solid fa-key"></i></div>
+                                                    {{ form.repetir_senha }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                                    </div>
+
+                                </form>
+
+                            {% endif %}
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="justify-content-center">
+                                <p class="help">Obs: Mínimo 8 dígitos, sendo no mínimo 3 letras e 3 números. Ex: abc12345 ou abcde123</p>
+                                <p>Problemas? Contacte seu supervisor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+            
+            </div>
+
+{% endblock %}

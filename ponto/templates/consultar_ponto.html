@@ -1,0 +1,37 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Filmes{% endblock %}
+
+{% block content %}
+
+    <style>
+
+    .container{
+        display: grid !important;
+        grid-template-columns: auto;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    </style>
+
+    <main class="container">
+
+            <div class="bg-light p-5 rounded m-2">
+                <p class="m-2"><b>Consulta realizada em:</b> {{ data }} e {{ hora }}</p>
+                <p class="m-2"><b>Matrícula:</b> {{ matricula }}</p>
+                <p class="m-2"><b>Funcionário:</b> {{ user.get_full_name }}</p>
+                <p class="m-2"><b>Setor:</b> {{ setor }}</p>
+                <p class="m-2"><b>Cargo:</b> {{ cargo }}</p>
+                {% for item in ponto %}
+                    <h3 class="mt-4 pt-3"><b>{{ item.tipo }}</b>: {{ item.data}} as {{ item.hora}}</h3>
+                {% endfor %}
+            </div>
+        
+    </main>
+
+{% endblock %}

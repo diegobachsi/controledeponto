@@ -1,0 +1,67 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Filmes{% endblock %}
+
+{% block content %}
+
+    <style>
+
+    .container{
+        margin-top: 100px !important;
+        margin-bottom: 150px !important;
+        display: grid !important;
+        grid-template-columns: auto !important;
+    }
+
+    a{
+        text-decoration: none;
+    }
+
+    </style>
+
+    <main class="container">
+
+            {% if validar_ponto_sucess %}
+                <div>
+
+                    <h1 class="text-success">Ponto validado com sucesso!</h1>
+
+                    <h4>Dados enviados para processamento da Folha de Pagamento.</b></h4>
+
+                    <a class="btn btn-primary" href="/confirmar_validacao_ponto/">Validar outro ponto</a>
+
+                </div>
+            {% else %}
+
+                {% if pontos %}
+             
+                    <div class="row"> 
+                        {% for ponto in pontos %}
+                                
+                                {% if ponto.tipo == 'ENTRADA' %}
+                                    <div class="bg-light">
+                                        <h3 class="mt-2 pt-3 text-center text-primary"><b>{{ ponto.data }}</b></h3>
+                                        <p><b>{{ ponto.tipo }}</b>: {{ ponto.hora}}</p>
+                                    </div>
+                                {% else %}
+                                    <div class="pb-5 mb-5 bg-light">
+                                        <b>{{ ponto.tipo }}</b>: {{ ponto.hora}}
+                                        <a class="btn btn-primary btn-sm d-grid gap-2 col-3 mx-auto" href="/confirmar_validacao_ponto/?idponto={{ ponto.id }}">Validar Ponto</a>
+                                    </div>
+                                {% endif %}
+                            
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    
+                    <p>Você não tem nenhum ponto a validar.</p>
+
+                {% endif %}  
+
+            {% endif %}
+        
+    </main>
+
+{% endblock %}

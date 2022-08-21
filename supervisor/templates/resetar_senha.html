@@ -1,0 +1,97 @@
+{% extends 'home.html' %}
+
+{% load static %}
+
+{% block title %}Filmes{% endblock %}
+
+{% block content %}
+
+    <style>
+
+        .container{
+            margin-top: 100px !important;
+            margin-bottom: 150px !important;
+            display: grid !important;
+            grid-template-columns: auto !important;
+        }
+
+
+        a{
+            text-decoration: none;
+        }
+
+        @media screen and (max-width: 1000px) {
+
+            .col-4{
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+    <main class="container">
+
+        {% if resetar_senha_submit %}
+
+            <div>
+
+                <h1 class="text-success">Senha resetada com sucesso!</h1>
+
+                <h4>Informe a senha provisória do funci: <b>{{ senha_provisoria }}</b></h4>
+
+                <a class="btn btn-primary" href="/form_resetar_senha/">Resetar outra senha</a>
+
+            </div>
+
+        {% else %}
+
+            <div class="row">
+
+                {% if messages %}
+                    <div class="alert alert-danger mx-auto px-3">
+                        {% for message in messages %}
+                            {% if forloop.first %}
+                                {{ message }}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                {% if not options %}
+
+                    <p>Você não possui nenhum funcionário para resetar senha.</p>
+
+                {% else %}
+
+                    <div class="col-4">
+                        <p><b>Atenção:</b></p>
+                        <p>
+                            Ao resetar a senha o funcionário não conseguirá acessar com a senha anterior.
+                            O próximo acesso será através da senha provisória para alteração de senha.
+                        </p>
+                    </div>
+                
+                    <div class="col m-3">
+                        
+                            <form class="border p-3 m-3" action="{% url 'supervisor:resetar_senha' %}" method="post">
+                            {% csrf_token %}
+                                <select class="form-control my-2 fs-6 text-secondary" name="funci" id="funci">
+                                        {% for op in options %}
+                                            <option>{{ op }}</option>
+                                        {% endfor %}
+                                </select>
+                                <button type="submit" class="btn btn-primary">Resetar Senha</button>
+                            </form>
+
+                    </div>
+
+                {% endif %}
+            </div>
+
+            
+        {% endif %}
+
+    </main>
+
+{% endblock %}
